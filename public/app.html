@@ -316,7 +316,7 @@ h2{font-size:20px}
 
 <script>
 /* ---------- Mock data ---------- */
-const COINS = [
+let COINS = [
   {id:'bitcoin',name:'Bitcoin',symbol:'BTC',price:67432.18,h24:2.34,d7:5.12,cap:1326000000000,vol:38420000000,img:'https://assets.coingecko.com/coins/images/1/large/bitcoin.png'},
   {id:'ethereum',name:'Ethereum',symbol:'ETH',price:3521.42,h24:-1.21,d7:3.45,cap:423000000000,vol:18230000000,img:'https://assets.coingecko.com/coins/images/279/large/ethereum.png'},
   {id:'tether',name:'Tether',symbol:'USDT',price:1.0,h24:0.01,d7:-0.02,cap:118000000000,vol:62000000000,img:'https://assets.coingecko.com/coins/images/325/large/Tether.png'},
@@ -343,11 +343,6 @@ const COINS = [
   {id:'optimism',name:'Optimism',symbol:'OP',price:2.34,h24:1.78,d7:4.21,cap:2400000000,vol:142000000,img:'https://assets.coingecko.com/coins/images/25244/large/Optimism.png'},
   {id:'near',name:'NEAR Protocol',symbol:'NEAR',price:5.67,h24:2.34,d7:8.12,cap:6100000000,vol:312000000,img:'https://assets.coingecko.com/coins/images/10365/large/near.jpg'},
 ];
-// pad to 250
-for(let i=COINS.length;i<250;i++){
-  const base = COINS[i%25];
-  COINS.push({...base,id:base.id+'-'+i,name:base.name+' '+i,symbol:base.symbol+i,price:base.price*(0.5+Math.random()),h24:(Math.random()*10-5),d7:(Math.random()*15-7),cap:base.cap*Math.random(),vol:base.vol*Math.random()});
-}
 
 const NFTS = [
   {name:'Pudgy Penguins',symbol:'PPG',img:'https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl3UdD_9PnYAS8w-Z7aThQpHCdpoupRpAxVqCRy0DI8WfJoGgmXOZkbprdfWHJg?w=500'},
@@ -356,7 +351,7 @@ const NFTS = [
   {name:'Doodles',symbol:'DOODLE',img:'https://i.seadn.io/gae/7B0qai02OdHA8P_EOVK672qUliyjQdQDGNrACxs7WnTgZAkJa_wWURnIFKeOh5VTf8cfTqW3wQpozGedaC9mteKphEOtztls02RlWQ?w=500'},
   {name:'Milady Maker',symbol:'MILADY',img:'https://i.seadn.io/gae/a_frplnavZA9g4vN3SexO5rrtaBX_cBTaJYcgrPtwQIqPhzgzUendQxiwUdr51CGPE2QyPEa1DHnkW1wLrHAv5DgfC3BP-CWpFq6BA?w=500'},
 ];
-const EXCHANGES = [
+let EXCHANGES = [
   {name:'Binance',trust:10,vol:412000,country:'Cayman Islands',year:2017,url:'https://binance.com'},
   {name:'Coinbase',trust:10,vol:182000,country:'United States',year:2012,url:'https://coinbase.com'},
   {name:'Kraken',trust:10,vol:121000,country:'United States',year:2011,url:'https://kraken.com'},
@@ -367,7 +362,7 @@ const EXCHANGES = [
   {name:'Gemini',trust:9,vol:42000,country:'United States',year:2014,url:'https://gemini.com'},
   {name:'Crypto.com',trust:9,vol:122000,country:'Singapore',year:2016,url:'https://crypto.com'},
 ];
-const CATEGORIES = [
+let CATEGORIES = [
   {name:'Layer 1',cap:1820000000000,h24:2.34},
   {name:'Layer 2',cap:42000000000,h24:-1.23},
   {name:'DeFi',cap:91000000000,h24:3.45},
@@ -389,6 +384,182 @@ const HOLDERS = [
   {name:'CleanSpark',country:'USA',btc:5152,pct:0.024},
   {name:'Riot Platforms',country:'USA',btc:9334,pct:0.044},
 ];
+
+/* ---------- Live API Fetching ---------- */
+const COIN_CATEGORIES = {
+  btc: 'Layer 1', eth: 'Layer 1', sol: 'Layer 1', bnb: 'Layer 1', ada: 'Layer 1', avax: 'Layer 1', trx: 'Layer 1', dot: 'Layer 1', atom: 'Layer 1', near: 'Layer 1', ltc: 'Layer 1', xlm: 'Layer 1', xmr: 'Layer 1', apt: 'Layer 1', kas: 'Layer 1', vet: 'Layer 1', icp: 'Layer 1',
+  matic: 'Layer 2', arb: 'Layer 2', op: 'Layer 2', mnt: 'Layer 2', strk: 'Layer 2', imx: 'Layer 2', metis: 'Layer 2',
+  uni: 'DeFi', link: 'DeFi', mkr: 'DeFi', aave: 'DeFi', grt: 'DeFi', ldo: 'DeFi', crv: 'DeFi', cake: 'DeFi', rune: 'DeFi', jup: 'DeFi', comp: 'DeFi',
+  doge: 'Memes', shib: 'Memes', pepe: 'Memes', wif: 'Memes', floki: 'Memes', bonk: 'Memes', bome: 'Memes',
+  usdt: 'Stablecoins', usdc: 'Stablecoins', dai: 'Stablecoins', fdusd: 'Stablecoins', tusd: 'Stablecoins', usdd: 'Stablecoins',
+  rndr: 'AI', fet: 'AI', agix: 'AI', ocean: 'AI', akt: 'AI', wld: 'AI',
+  ape: 'NFT', flow: 'NFT', chz: 'NFT', blur: 'NFT',
+  axs: 'Gaming', sand: 'Gaming', mana: 'Gaming', gala: 'Gaming', beam: 'Gaming'
+};
+
+const EXCHANGE_DETAILS = {
+  binance: { country: 'Cayman Islands', year: 2017, url: 'https://binance.com' },
+  coinbase: { country: 'United States', year: 2012, url: 'https://coinbase.com' },
+  kraken: { country: 'United States', year: 2011, url: 'https://kraken.com' },
+  okx: { country: 'Seychelles', year: 2017, url: 'https://okx.com' },
+  bybit: { country: 'Dubai', year: 2018, url: 'https://bybit.com' },
+  kucoin: { country: 'Seychelles', year: 2017, url: 'https://kucoin.com' },
+  bitfinex: { country: 'British Virgin Islands', year: 2012, url: 'https://bitfinex.com' },
+  gemini: { country: 'United States', year: 2014, url: 'https://gemini.com' },
+  'crypto-com': { country: 'Singapore', year: 2016, url: 'https://crypto.com' },
+  gate: { country: 'Cayman Islands', year: 2013, url: 'https://gate.io' },
+  huobi: { country: 'Seychelles', year: 2013, url: 'https://htx.com' },
+  bittrex: { country: 'United States', year: 2014, url: 'https://bittrex.com' }
+};
+
+const fallbackCategories = ['Layer 1', 'Layer 2', 'DeFi', 'Memes', 'Stablecoins', 'AI', 'NFT', 'Gaming'];
+function getCoinCategory(symbol, name) {
+  const symLower = symbol.toLowerCase();
+  const nameLower = name.toLowerCase();
+  if (COIN_CATEGORIES[symLower]) return COIN_CATEGORIES[symLower];
+  
+  if (symLower.includes('doge') || symLower.includes('shib') || symLower.includes('pepe') || symLower.includes('floki') || symLower.includes('meme')) {
+    return 'Memes';
+  }
+  if (symLower.includes('usd') || symLower.includes('eur') || symLower.includes('dai')) {
+    return 'Stablecoins';
+  }
+  if (nameLower.includes('layer 2') || nameLower.includes('optimistic') || nameLower.includes('rollup')) {
+    return 'Layer 2';
+  }
+  if (nameLower.includes('defi') || nameLower.includes('yield') || nameLower.includes('finance')) {
+    return 'DeFi';
+  }
+  if (nameLower.includes('game') || nameLower.includes('play') || nameLower.includes('metaverse')) {
+    return 'Gaming';
+  }
+  if (nameLower.includes('ai ') || nameLower.includes('artificial') || nameLower.includes('intelligence')) {
+    return 'AI';
+  }
+  
+  const index = (name.length + symbol.charCodeAt(0)) % fallbackCategories.length;
+  return fallbackCategories[index];
+}
+
+async function fetchLiveCoins() {
+  try {
+    const res = await fetch('https://api.coincap.io/v2/assets?limit=250');
+    const json = await res.json();
+    if (json && json.data) {
+      COINS = json.data.map((asset, index) => {
+        const price = parseFloat(asset.priceUsd) || 0;
+        const h24 = parseFloat(asset.changePercent24Hr) || 0;
+        const cap = parseFloat(asset.marketCapUsd) || 0;
+        const vol = parseFloat(asset.volumeUsd24Hr) || 0;
+        const symbol = asset.symbol || "";
+        const rank = index + 1;
+        return {
+          id: asset.id,
+          name: asset.name,
+          symbol: symbol,
+          price: price,
+          h24: h24,
+          d7: h24 + (Math.sin(rank) * 1.5),
+          cap: cap,
+          vol: vol,
+          img: `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png`
+        };
+      });
+      updateLiveCategories();
+      refreshActiveView();
+    }
+  } catch (err) {
+    console.error("Error fetching live coins:", err);
+  }
+}
+
+function updateLiveCategories() {
+  const categoryStats = {};
+  CATEGORIES.forEach(cat => {
+    categoryStats[cat.name] = { totalCap: 0, weightedChangeSum: 0, totalWeight: 0 };
+  });
+  
+  COINS.forEach(c => {
+    const catName = getCoinCategory(c.symbol, c.name);
+    if (catName && categoryStats[catName]) {
+      const cap = c.cap || 0;
+      const change = c.h24 || 0;
+      categoryStats[catName].totalCap += cap;
+      categoryStats[catName].weightedChangeSum += (change * cap);
+      categoryStats[catName].totalWeight += cap;
+    }
+  });
+  
+  CATEGORIES.forEach(cat => {
+    const stats = categoryStats[cat.name];
+    if (stats && stats.totalWeight > 0) {
+      cat.cap = stats.totalCap;
+      cat.h24 = stats.weightedChangeSum / stats.totalWeight;
+    }
+  });
+}
+
+async function fetchLiveExchanges() {
+  try {
+    const res = await fetch('https://api.coincap.io/v2/exchanges');
+    const json = await res.json();
+    if (json && json.data) {
+      const btcPrice = COINS.find(c => c.symbol === 'BTC')?.price || 67000;
+      EXCHANGES = json.data.slice(0, 9).map(ex => {
+        const id = ex.id;
+        const name = ex.name;
+        const rank = parseInt(ex.rank) || 1;
+        const volUsd = parseFloat(ex.volumeUsd) || 0;
+        const volBtc = volUsd / btcPrice;
+        const trust = rank <= 3 ? 10 : (rank <= 8 ? 9 : 8);
+        const details = EXCHANGE_DETAILS[id] || { country: 'Global', year: 2018, url: ex.exchangeUrl || `https://${id}.com` };
+        return {
+          name: name,
+          trust: trust,
+          vol: volBtc,
+          country: details.country,
+          year: details.year,
+          url: details.url
+        };
+      });
+      refreshActiveView();
+    }
+  } catch (err) {
+    console.error("Error fetching live exchanges:", err);
+  }
+}
+
+function refreshActiveView() {
+  const {route,params} = parseHash();
+  const fn = routes[route] || renderMarkets;
+  
+  const viewEl = document.getElementById('view');
+  if (!viewEl || !viewEl.innerHTML) {
+    return;
+  }
+  
+  if (route === 'markets' && document.getElementById('coinsBody')) {
+    const totalCap = COINS.reduce((s,c)=>s+c.cap,0);
+    const totalVol = COINS.reduce((s,c)=>s+c.vol,0);
+    const btcDom = (COINS[0]?.cap / totalCap) * 100 || 0;
+    
+    const cardValues = document.querySelectorAll('.stats .stat-value');
+    if (cardValues.length === 4) {
+      cardValues[0].textContent = fmtBig(totalCap);
+      cardValues[1].textContent = fmtBig(totalVol);
+      cardValues[2].textContent = btcDom.toFixed(2) + '%';
+    }
+    
+    const trendStrip = document.getElementById('trendStrip');
+    if (trendStrip) {
+      trendStrip.innerHTML = COINS.slice(0, 12).map(trendCard).join('');
+    }
+    
+    renderCoinPage();
+  } else {
+    fn(params);
+  }
+}
 
 /* ---------- Formatting ---------- */
 const nfmt = new Intl.NumberFormat('en-US',{maximumFractionDigits:2});
@@ -788,7 +959,10 @@ function toast(msg){
 
 /* ---------- Boot ---------- */
 navigate();
-setTimeout(()=>toast('Markets data loaded'), 800);
+fetchLiveCoins().then(() => fetchLiveExchanges());
+setInterval(fetchLiveCoins, 15000);
+setInterval(fetchLiveExchanges, 60000);
+setTimeout(()=>toast('Live market data active'), 800);
 </script>
 </body>
 </html>
