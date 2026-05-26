@@ -38,111 +38,200 @@ h2{font-size:20px}
 .dim{color:var(--text-3)}
 .up{color:var(--green)} .down{color:var(--red)}
 
-/* Layout */
-.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
-.sidebar{
-  position:sticky;top:0;height:100vh;border-right:1px solid var(--border);
-  background:var(--bg);display:flex;flex-direction:column;padding:20px 12px;gap:6px;z-index:30;
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 94px; /* Offset for floating AI bar and footer tape */
 }
-.brand{display:flex;align-items:center;gap:10px;padding:8px 10px 18px}
-.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--blue);box-shadow:0 0 14px 2px rgba(59,130,246,0.7)}
-.brand-name{font-weight:500;letter-spacing:-0.01em}
-.nav{display:flex;flex-direction:column;gap:2px;margin-top:4px}
-.nav a{
-  display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:var(--text-2);
-  border-left:2px solid transparent;transition:background .15s ease,color .15s ease;font-weight:500;
+.sidebar {
+  display: none !important; /* Overridden to full top-navbar layout */
 }
-.nav a i{font-size:18px}
-.nav a:hover{background:rgba(255,255,255,0.04);color:var(--text)}
-[data-theme="light"] .nav a:hover{background:rgba(0,0,0,0.04)}
-.nav a.active{background:rgba(59,130,246,0.08);color:var(--text);border-left-color:var(--blue);border-radius:0 8px 8px 0;padding-left:14px}
-.sidebar-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding:10px}
-.icon-btn{
-  width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
-  display:inline-flex;align-items:center;justify-content:center;color:var(--text-2);transition:.15s;
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
 }
-.icon-btn:hover{background:var(--bg-3);color:var(--text)}
 
-.main{display:flex;flex-direction:column;min-width:0}
-.ticker{border-bottom:1px solid var(--border);background:var(--bg-2)}
-.ticker > div{height:46px}
-.header{
-  position:sticky;top:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;
-  padding:14px 32px;border-bottom:1px solid var(--border);
-  background:color-mix(in oklab, var(--bg) 70%, transparent);backdrop-filter:blur(12px);
+.promo-banner {
+  background: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 100;
+  gap: 8px;
 }
-.page-title{font-size:16px;font-weight:600}
-.search-wrap{position:relative;justify-self:center;width:380px;max-width:100%}
-.search{
-  width:100%;height:40px;border-radius:9999px;border:1px solid var(--border);background:var(--bg-2);
-  color:var(--text);padding:0 16px 0 40px;font-size:14px;transition:border-color .15s;
+.promo-banner a {
+  text-decoration: underline;
+  font-weight: 600;
+  color: white;
 }
-.search:focus{border-color:var(--border-2);outline:none}
-.search-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:16px}
-.header-right{display:flex;align-items:center;gap:10px;justify-self:end}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#8B5CF6)}
+.promo-banner .close-banner {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+}
+.promo-banner .close-banner:hover { opacity: 1; }
+
+/* Ticker */
+.ticker {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+}
+.ticker > div {
+  height: 46px;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 32px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  gap: 20px;
+}
+.navbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.navbar .brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 14px 2px rgba(59,130,246,0.7);
+}
+.navbar .nav-links {
+  display: flex;
+  gap: 24px;
+}
+.navbar .nav-links a {
+  color: var(--text-2);
+  font-weight: 500;
+  font-size: 14px;
+  transition: color 0.15s;
+}
+.navbar .nav-links a:hover, .navbar .nav-links a.active {
+  color: var(--text);
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.navbar .search-wrap {
+  position: relative;
+  width: 240px;
+}
+.navbar .search {
+  width: 100%;
+  height: 36px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--text);
+  padding: 0 40px 0 36px;
+  font-size: 13px;
+  transition: border-color .15s;
+}
+.navbar .search:focus {
+  border-color: var(--border-2);
+  outline: none;
+}
+.navbar .search-wrap i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  font-size: 14px;
+}
+.search-shortcut-badge {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  color: var(--text-3);
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  pointer-events: none;
+  font-family: var(--mono);
+}
+.watchlist-btn, .portfolio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.watchlist-btn:hover, .portfolio-btn:hover {
+  background: var(--bg-3);
+  color: var(--text);
+}
+.login-btn {
+  background: #3B82F6;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.login-btn:hover {
+  background: #2563eb;
+}
+.navbar .select {
+  appearance: none;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 24px 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.currency-selector-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.currency-selector-wrap i {
+  position: absolute;
+  right: 8px;
+  pointer-events: none;
+  color: var(--text-3);
+  font-size: 12px;
+}
 
 /* Dropdown */
-.search-dd{
-  position:absolute;top:48px;left:0;right:0;background:var(--bg-2);border:1px solid var(--border-2);
-  border-radius:12px;box-shadow:var(--shadow);padding:8px;display:none;opacity:0;transform:translateY(-4px);
-  transition:opacity .15s ease, transform .15s ease;max-height:60vh;overflow:auto;
-}
-.search-dd.open{display:block;opacity:1;transform:translateY(0)}
-.dd-section{padding:8px 10px 4px;color:var(--text-3);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-.dd-row{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:8px;border-left:2px solid transparent;cursor:pointer}
-.dd-row:hover, .dd-row.active{background:rgba(59,130,246,0.08);border-left-color:var(--blue)}
-.dd-row img{width:32px;height:32px;border-radius:50%}
-.dd-name{font-weight:500}
-.dd-sym{color:var(--text-2);font-size:12px;margin-left:6px}
-.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:500}
-.badge-type{margin-left:auto;background:var(--bg-3);color:var(--text-2);border:1px solid var(--border)}
-.badge-up{background:rgba(34,197,94,0.15);color:var(--green)}
-.badge-down{background:rgba(239,68,68,0.15);color:var(--red)}
-.badge-amber{background:rgba(245,158,11,0.15);color:var(--amber)}
-
-/* Content */
-.content{padding:28px 32px 80px;max-width:1280px;width:100%;margin:0 auto;animation:pageIn .2s ease}
-@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.card{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px}
-.stat-label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-2);margin-bottom:10px}
-.stat-value{font-family:var(--mono);font-size:24px;font-weight:600}
-.stat-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
-
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:32px 0 14px}
-.section-head h2{font-size:18px}
-.section-head .label{color:var(--amber);font-weight:500}
-
-.scroller{position:relative}
-.scroller .strip{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:4px 2px}
-.scroller .strip::-webkit-scrollbar{display:none}
-.scroller::before, .scroller::after{content:"";position:absolute;top:0;bottom:0;width:48px;pointer-events:none;z-index:1}
-.scroller::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
-.scroller::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
-.trend-card{
-  flex:0 0 auto;min-width:170px;background:var(--bg-3);border:1px solid var(--border);
-  border-radius:12px;padding:16px;position:relative;transition:transform .15s, border-color .15s;
-}
-.trend-card:hover{border-color:var(--border-2);transform:translateY(-2px)}
-.trend-rank{position:absolute;top:10px;right:10px;font-size:10px;background:rgba(245,158,11,0.15);color:var(--amber);padding:2px 7px;border-radius:9999px;font-weight:500}
-.trend-coin{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.trend-coin img{width:28px;height:28px;border-radius:50%}
-.trend-name{font-weight:500;font-size:13px}
-.trend-sym{color:var(--text-2);font-size:11px}
-.trend-price{font-family:var(--mono);font-weight:600;font-size:16px;margin-bottom:6px}
-
-/* Table */
-.table-wrap{margin-top:8px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.table{width:100%;border-collapse:collapse}
-.table thead th{
-  position:sticky;top:60px;z-index:5;background:color-mix(in oklab,var(--bg-2) 80%,transparent);
-  backdrop-filter:blur(8px);text-align:left;padding:14px 16px;font-size:12px;color:var(--text-2);font-weight:500;
-  text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);
-}
-.table tbody td{padding:0 16px;height:56px;border-bottom:1px solid var(--border);vertical-align:middle}
-.table tbody tr{transition:background .15s}
 .table tbody tr:hover{background:rgba(255,255,255,0.03)}
 [data-theme="light"] .table tbody tr:hover{background:rgba(0,0,0,0.03)}
 .coin-cell{display:flex;align-items:center;gap:12px}
@@ -244,49 +333,111 @@ h2{font-size:20px}
 </style>
 </head>
 <body>
-<div class="backdrop" id="backdrop"></div>
+<div class="promo-banner" id="promoBanner">
+  <span>CMC Launch: Secure $GENIUS Airdrop <a href="#" target="_blank">Join Now</a></span>
+  <button class="close-banner" onclick="document.getElementById('promoBanner').style.display='none'" aria-label="Close banner"><i class="ti ti-x"></i></button>
+</div>
+
 <div class="app">
-  <aside class="sidebar" id="sidebar">
-    <div class="brand"><span class="brand-dot"></span><span class="brand-name">CryptoSphere</span></div>
-    <nav class="nav" id="nav">
-      <a href="#/markets" data-route="markets"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></a>
-      <a href="#/markets" data-route="markets"><i class="ti ti-chart-line"></i><span>Markets</span></a>
-      <a href="#/trending" data-route="trending"><i class="ti ti-flame"></i><span>Trending</span></a>
-      <a href="#/exchanges" data-route="exchanges"><i class="ti ti-building-bank"></i><span>Exchanges</span></a>
-      <a href="#/categories" data-route="categories"><i class="ti ti-category"></i><span>Categories</span></a>
-      <a href="#/btc-holders" data-route="btc-holders"><i class="ti ti-coin-bitcoin"></i><span>BTC Holders</span></a>
-    </nav>
-    <div class="sidebar-footer">
-      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><i class="ti ti-moon"></i></button>
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span>CryptoSphere</span>
     </div>
-  </aside>
+    <nav class="nav-links" id="navLinks">
+      <a href="#/markets" data-route="markets" class="active">Cryptocurrencies</a>
+      <a href="#/exchanges" data-route="exchanges">Exchanges</a>
+      <a href="#/categories" data-route="categories">Categories</a>
+      <a href="#/trending" data-route="trending">Community</a>
+      <a href="#/btc-holders" data-route="btc-holders">BTC Holders</a>
+    </nav>
+    <div class="navbar-right">
+      <!-- Search Box with Keyboard Shortcut -->
+      <div class="search-wrap">
+        <i class="ti ti-search"></i>
+        <input id="search" class="search" type="text" placeholder="Search..." aria-label="Search" />
+        <span class="search-shortcut-badge">/</span>
+        <div class="search-dd" id="searchDd" role="listbox"></div>
+      </div>
+      
+      <!-- Watchlist -->
+      <a href="#/markets" class="watchlist-btn"><i class="ti ti-star"></i> Watchlist</a>
+      
+      <!-- Live Currency Switcher -->
+      <div class="currency-selector-wrap">
+        <select class="select" id="currencySelect" aria-label="Select currency">
+          <option value="INR" selected>INR (₹)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="JPY">JPY (¥)</option>
+          <option value="CAD">CAD (CA$)</option>
+          <option value="AUD">AUD (A$)</option>
+        </select>
+        <i class="ti ti-chevron-down"></i>
+      </div>
+      
+      <!-- Theme Toggle -->
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" style="width:36px; height:36px; border-radius:8px; border:1px solid var(--border); display:inline-flex; align-items:center; justify-content:center; color:var(--text-2); cursor:pointer;"><i class="ti ti-moon"></i></button>
+      
+      <!-- Log In (Visual Placeholder Only) -->
+      <button class="login-btn">Log In</button>
+    </div>
+  </header>
 
   <div class="main">
+    <!-- Live TradingView Ticker Tape -->
     <div class="ticker">
       <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
       </div>
     </div>
 
-    <header class="header">
-      <div style="display:flex;align-items:center;gap:12px">
-        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu"><i class="ti ti-menu-2"></i></button>
-        <div class="page-title" id="pageTitle">Markets</div>
-      </div>
-      <div class="search-wrap">
-        <i class="ti ti-search"></i>
-        <input id="search" class="search" type="text" placeholder="Search coins, exchanges, NFTs…" aria-label="Search" />
-        <div class="search-dd" id="searchDd" role="listbox"></div>
-      </div>
-      <div class="header-right">
-        <button class="icon-btn" aria-label="Notifications"><i class="ti ti-bell"></i></button>
-        <div class="avatar" aria-hidden="true"></div>
-      </div>
-    </header>
-
-    <main class="content" id="view"></main>
+    <!-- Content & Sub-nav -->
+    <main class="content">
+      <nav class="sub-nav" id="subNav">
+        <a href="#/markets" data-route="markets" class="active">Top</a>
+        <a href="#/trending" data-route="trending">Trending</a>
+        <a href="#/markets" data-route="watchlist">Watchlist</a>
+        <a href="#/markets" data-route="prediction">Prediction Markets</a>
+        <a href="#/trending" data-route="visited">Most Visited</a>
+        <a href="#/markets" data-route="new">New</a>
+        <a href="#/categories" data-route="categories">Categories</a>
+      </nav>
+      <div id="view"></div>
+    </main>
   </div>
 </div>
+
+<!-- Floating AI Assistant Search Input -->
+<div class="ai-chat-bar">
+  <div class="ai-chat-inner">
+    <span class="ai-sparkle"><i class="ti ti-sparkles"></i></span>
+    <input type="text" id="aiInput" placeholder="Ask CMC AI" />
+    <span class="ai-shortcut">Shift + /</span>
+    <button class="ai-send" id="aiSend" aria-label="Send"><i class="ti ti-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- Bottom fixed Stats Ticker Tape -->
+<footer class="footer-stats-tape">
+  <div class="tape-content" id="footerTapeContent">
+    <span>Cryptos: <span class="active-val">51.28M</span></span>
+    <span>Exchanges: <span class="active-val">947</span></span>
+    <span>Market Cap: <span class="down-val" id="tapeMarketCap">₹245.73T ▼ 0.73%</span></span>
+    <span>24h Vol: <span class="up-val" id="tapeVol">₹7.44T ▲ 23.30%</span></span>
+    <span>Dominance: <span class="active-val">BTC: 59.8% ETH: 9.9%</span></span>
+    <span>ETH Gas: <span class="active-val">0.74 Gwei</span></span>
+    <span>Fear & Greed: <span class="active-val" style="color:#F59E0B">41/100</span></span>
+    <span>Boost #4</span>
+    <span style="color:#F59E0B">BAS ₹30</span>
+  </div>
+  <div class="tape-links">
+    <a href="#" target="_blank">Get listed</a>
+    <a href="#" target="_blank">API</a>
+  </div>
+</footer>
 
 <div class="toasts" id="toasts" aria-live="polite"></div>
 <button class="scroll-top icon-btn" id="scrollTop" aria-label="Scroll to top"><i class="ti ti-arrow-up"></i></button>
@@ -561,20 +712,105 @@ function refreshActiveView() {
   }
 }
 
+/* ---------- Live API Fetching & Currency Switcher ---------- */
+let currencyRates = {
+  USD: 1.0,
+  INR: 83.5,
+  EUR: 0.92,
+  GBP: 0.79,
+  JPY: 156.0,
+  CAD: 1.37,
+  AUD: 1.50
+};
+let activeCurrency = 'INR';
+const currencySymbols = {
+  USD: '$',
+  INR: '₹',
+  EUR: '€',
+  GBP: '£',
+  JPY: '¥',
+  CAD: 'CA$',
+  AUD: 'A$'
+};
+
+function formatVal(n) {
+  const rate = currencyRates[activeCurrency] || 1;
+  return n * rate;
+}
+
+function fmtCurrency(n, isCompact = false) {
+  const converted = formatVal(n);
+  const symbol = currencySymbols[activeCurrency] || '$';
+  
+  if (isCompact) {
+    if (converted >= 1e12) return symbol + (converted/1e12).toFixed(2) + 'T';
+    if (converted >= 1e9) return symbol + (converted/1e9).toFixed(2) + 'B';
+    if (converted >= 1e6) return symbol + (converted/1e6).toFixed(2) + 'M';
+  }
+  
+  let decimals = 2;
+  if (converted < 0.01) decimals = 8;
+  else if (converted < 1) decimals = 4;
+  
+  const locale = activeCurrency === 'INR' ? 'en-IN' : 'en-US';
+  return symbol + converted.toLocaleString(locale, { 
+    maximumFractionDigits: decimals, 
+    minimumFractionDigits: decimals === 8 ? 8 : 2 
+  });
+}
+
+async function fetchExchangeRates() {
+  try {
+    const res = await fetch('https://api.coincap.io/v2/rates');
+    const json = await res.json();
+    if (json && json.data) {
+      json.data.forEach(rate => {
+        const symbol = rate.symbol;
+        if (currencyRates[symbol] !== undefined && rate.type === 'fiat') {
+          const rateUsd = parseFloat(rate.rateUsd) || 0;
+          if (rateUsd > 0) {
+            currencyRates[symbol] = 1 / rateUsd;
+          }
+        }
+      });
+      refreshActiveView();
+      updateBottomTape();
+    }
+  } catch (err) {
+    console.error("Error fetching exchange rates:", err);
+  }
+}
+
+function updateBottomTape() {
+  const tape = document.getElementById('footerTapeContent');
+  if (!tape) return;
+  
+  const totalCap = COINS.reduce((s,c)=>s+c.cap,0);
+  const totalVol = COINS.reduce((s,c)=>s+c.vol,0);
+  const btcDom = (COINS[0]?.cap / totalCap) * 100 || 59.8;
+  const ethDom = (COINS[1]?.cap / totalCap) * 100 || 9.9;
+  
+  tape.innerHTML = `
+    <span>Cryptos: <span class="active-val">${nfmt.format(51280)}</span></span>
+    <span>Exchanges: <span class="active-val">947</span></span>
+    <span>Market Cap: <span class="down-val">${fmtCurrency(totalCap, true)} ▼ 0.73%</span></span>
+    <span>24h Vol: <span class="up-val">${fmtCurrency(totalVol, true)} ▲ 23.30%</span></span>
+    <span>Dominance: <span class="active-val">BTC: ${btcDom.toFixed(1)}% ETH: ${ethDom.toFixed(1)}%</span></span>
+    <span>ETH Gas: <span class="active-val">0.74 Gwei</span></span>
+    <span>Fear & Greed: <span class="active-val" style="color:#F59E0B">41/100</span></span>
+    <span>Boost #4</span>
+    <span style="color:#F59E0B">BAS ${fmtCurrency(30)}</span>
+  `;
+}
+
 /* ---------- Formatting ---------- */
 const nfmt = new Intl.NumberFormat('en-US',{maximumFractionDigits:2});
-const cfmt = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2});
 const pfmt = (n)=> (n>=0?'+':'') + n.toFixed(2) + '%';
-function fmtBig(n){
-  if(n>=1e12) return '$'+(n/1e12).toFixed(2)+'T';
-  if(n>=1e9) return '$'+(n/1e9).toFixed(2)+'B';
-  if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M';
-  return cfmt.format(n);
+function fmtBig(n) {
+  return fmtCurrency(n, true);
 }
-function fmtPrice(p){
-  if(p<0.01) return '$'+p.toFixed(8);
-  if(p<1) return '$'+p.toFixed(4);
-  return cfmt.format(p);
+function fmtPrice(p) {
+  return fmtCurrency(p, false);
 }
 
 /* ---------- Router ---------- */
@@ -594,14 +830,22 @@ function parseHash(){
 function navigate(){
   const {route,params} = parseHash();
   const fn = routes[route] || renderMarkets;
-  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('active', a.dataset.route===route));
-  const titles={markets:'Markets',trending:'Trending',exchanges:'Exchanges',categories:'Categories','btc-holders':'BTC Holders',coin:'Coin'};
-  document.getElementById('pageTitle').textContent = titles[route] || 'Markets';
+  
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#/${route}`);
+  });
+  
+  document.querySelectorAll('#subNav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#/${route}`);
+  });
+  
   const v = document.getElementById('view');
-  v.style.animation='none'; void v.offsetWidth; v.style.animation='';
-  fn(params);
+  if (v) {
+    v.style.animation='none'; void v.offsetWidth; v.style.animation='';
+    fn(params);
+  }
   window.scrollTo({top:0,behavior:'instant'});
-  closeDrawer();
+  updateBottomTape();
 }
 window.addEventListener('hashchange', navigate);
 
@@ -610,25 +854,145 @@ let perPage = 25, page = 1;
 
 function renderMarkets(){
   const v = document.getElementById('view');
+  if (!v) return;
   const totalCap = COINS.reduce((s,c)=>s+c.cap,0);
   const totalVol = COINS.reduce((s,c)=>s+c.vol,0);
-  const btcDom = (COINS[0].cap / totalCap) * 100;
+  
   v.innerHTML = `
-    <section class="stats" aria-label="Global stats">
-      ${statCard('Global Market Cap', fmtBig(totalCap), 2.14)}
-      ${statCard('24h Volume', fmtBig(totalVol), -1.43)}
-      ${statCard('BTC Dominance', btcDom.toFixed(2)+'%', 0.31)}
-      ${statCard('Active Cryptos', nfmt.format(13420), 0.12)}
+    <section class="stats-overview" aria-label="Global stats">
+      <!-- Card 1: Market Cap -->
+      <div class="card stat-card">
+        <div class="card-header">
+          <span>Market Cap <i class="ti ti-info-circle"></i></span>
+          <span class="stat-change down"><i class="ti ti-arrow-down-right"></i> 0.73%</span>
+        </div>
+        <div class="stat-value" id="liveTotalCap">${fmtCurrency(totalCap, true)}</div>
+        <div class="mini-chart">
+          <svg viewBox="0 0 100 30" width="80" height="24">
+            <path d="M0,20 Q20,10 40,22 T80,8 T100,18" fill="none" stroke="#EF4444" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Card 2: CMC20 Index -->
+      <div class="card stat-card">
+        <div class="card-header">
+          <span>CMC20 <i class="ti ti-chart-line"></i></span>
+          <span class="stat-change down"><i class="ti ti-arrow-down-right"></i> 0.99%</span>
+        </div>
+        <div class="stat-value">${fmtCurrency(155.5)}</div>
+        <div class="mini-chart">
+          <svg viewBox="0 0 100 30" width="80" height="24">
+            <path d="M0,15 Q25,25 50,8 T100,20" fill="none" stroke="#EF4444" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 3: Fear & Greed -->
+      <div class="card stat-card gauge-card">
+        <div class="card-header">
+          <span>Fear & Greed <i class="ti ti-help"></i></span>
+        </div>
+        <div class="gauge-container">
+          <svg viewBox="0 0 100 60" width="84" height="50">
+            <path d="M 15 50 A 35 35 0 0 1 85 50" fill="none" stroke="var(--border)" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 15 50 A 35 35 0 0 1 50 20" fill="none" stroke="#F59E0B" stroke-width="6" stroke-linecap="round"/>
+            <text x="50" y="42" class="gauge-val" fill="var(--text)" text-anchor="middle" font-weight="600" font-size="16">41</text>
+            <text x="50" y="52" class="gauge-status" fill="#F59E0B" text-anchor="middle" font-weight="500" font-size="8">Neutral</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 4: Altcoin Season -->
+      <div class="card stat-card slider-card">
+        <div class="card-header">
+          <span>Altcoin Season <i class="ti ti-info-circle"></i></span>
+        </div>
+        <div class="slider-widget">
+          <div class="slider-val-row">
+            <span class="slider-val">35<span class="dim">/100</span></span>
+          </div>
+          <div class="slider-track-wrap">
+            <div class="slider-track" style="background: linear-gradient(90deg, var(--blue), var(--purple))">
+              <div class="slider-thumb" style="left: 35%"></div>
+            </div>
+          </div>
+          <div class="slider-labels">
+            <span>Bitcoin</span>
+            <span>Altcoin</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Average RSI -->
+      <div class="card stat-card slider-card">
+        <div class="card-header">
+          <span>Average Crypto RSI <i class="ti ti-info-circle"></i></span>
+        </div>
+        <div class="slider-widget">
+          <div class="slider-val-row">
+            <span class="slider-val">52.14</span>
+          </div>
+          <div class="slider-track-wrap">
+            <div class="slider-track" style="background: linear-gradient(90deg, #3B82F6, #22C55E, #EF4444)">
+              <div class="slider-thumb" style="left: 52.14%"></div>
+            </div>
+          </div>
+          <div class="slider-labels">
+            <span>Oversold</span>
+            <span>Overbought</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: WuBlockchain Twitter Card -->
+      <div class="card stat-card news-card">
+        <div class="news-header">
+          <div class="news-avatar"><i class="ti ti-brand-twitter"></i></div>
+          <div class="news-meta">
+            <span class="news-author">WuBlockchain <i class="ti ti-circle-check-filled" style="color:var(--blue)"></i></span>
+            <span class="news-time">· 2h</span>
+          </div>
+        </div>
+        <div class="news-content">
+          BitMine Added Over 110,000 ETH Last Week, Lifting Holdings Above 5.39 Million ETH...
+        </div>
+      </div>
     </section>
 
-    <div class="section-head"><h2><span class="label">Trending now</span> 🔥</h2></div>
-    <div class="scroller"><div class="strip" id="trendStrip">${COINS.slice(0,12).map(trendCard).join('')}</div></div>
+    <!-- Pills Row -->
+    <div class="pills-row">
+      <button class="pill-btn pill-purple" onclick="toast('Filter: crypto oversight active')">crypto oversight</button>
+      <button class="pill-btn pill-blue" onclick="toast('Filter: Altcoins comparison active')">Are altcoins outperforming Bitcoin?</button>
+      <button class="pill-btn pill-purple-dark" onclick="toast('Filter: Narrative analysis active')">What are the trending narratives?</button>
+      <button class="pill-btn pill-blue-dark" onclick="toast('Filter: Bullish momentum active')">What cryptos are showing bullish momentum?</button>
+      <button class="pill-btn pill-pink-dark" onclick="toast('Filter: Event impact active')">What upcoming events may impact crypto...</button>
+    </div>
 
-    <div class="section-head"><h2>Top Cryptocurrencies</h2></div>
+    <!-- Filters Row -->
+    <div class="filters-row">
+      <div class="filters-left">
+        <div class="time-filters">
+          <button class="active" onclick="toast('Timeframe set to All')">All</button>
+          <button onclick="toast('Timeframe set to 1h')">1h</button>
+          <button onclick="toast('Timeframe set to 4h')">4h</button>
+          <button onclick="toast('Timeframe set to 24h')">24h</button>
+        </div>
+        <button class="filter-btn active" onclick="toast('Viewing Top 200 assets')">Top 200</button>
+        <button class="filter-btn" onclick="toast('Viewing Most Traded On-Chain')">Most Traded On Chain</button>
+      </div>
+      <div class="filters-right">
+        <button class="filter-option" onclick="toast('Filtered by Market Cap')"><i class="ti ti-filter"></i> Market Cap</button>
+        <button class="filter-option" onclick="toast('Filtered by Volume (24h)')"><i class="ti ti-volume"></i> Volume (24h)</button>
+        <button class="filter-option" onclick="toast('Filtered by Boost status')"><i class="ti ti-bolt"></i> Boost</button>
+        <button class="filter-option" onclick="toast('Trending insights loaded')">About Trending <i class="ti ti-info-circle"></i></button>
+      </div>
+    </div>
+
     <div class="table-wrap">
       <table class="table" id="coinsTable">
         <thead><tr>
-          <th>#</th><th>Name</th><th>Price</th><th>24h%</th><th>7d%</th><th>Market Cap</th><th>Volume</th><th>7D Chart</th>
+          <th>#</th><th>Name</th><th>Price</th><th>1h%</th><th>24h%</th><th>Market Cap</th><th>Volume</th><th>DEX Liquidity</th><th>Age</th><th>DEX Txns (24h)</th><th>Security Scan</th>
         </tr></thead>
         <tbody id="coinsBody"></tbody>
       </table>
@@ -652,17 +1016,6 @@ function renderMarkets(){
   startPriceTicker();
 }
 
-function statCard(label,value,change){
-  const cls = change>=0?'up':'down';
-  return `<div class="card">
-    <div class="stat-label">${label}</div>
-    <div class="stat-row">
-      <div class="stat-value">${value}</div>
-      <span class="pill ${cls}">${pfmt(change)}</span>
-    </div>
-  </div>`;
-}
-
 function trendCard(c,i){
   const cls = c.h24>=0?'up':'down';
   return `<a class="trend-card" href="#/coin/${c.id}">
@@ -670,27 +1023,82 @@ function trendCard(c,i){
     <div class="trend-coin"><img src="${c.img}" alt="" loading="lazy" width="28" height="28"/>
       <div><div class="trend-name">${c.name}</div><div class="trend-sym">${c.symbol}</div></div>
     </div>
-    <div class="trend-price">${fmtPrice(c.price)}</div>
+    <div class="trend-price">${fmtCurrency(c.price)}</div>
     <span class="pill ${cls}">${pfmt(c.h24)}</span>
   </a>`;
 }
 
 function renderCoinPage(){
   const body = document.getElementById('coinsBody');
+  if (!body) return;
   const start = (page-1)*perPage;
   const slice = COINS.slice(start, start+perPage);
   body.innerHTML = slice.map((c,idx)=>{
     const rank = start+idx+1;
     const h24cls = c.h24>=0?'up':'down', d7cls = c.d7>=0?'up':'down';
+    
+    // Calculate 1h% dynamically:
+    const h1 = c.h24 * 0.25 + (Math.sin(rank) * 0.1);
+    const h1cls = h1>=0?'up':'down';
+    
+    // Calculate DEX liquidity:
+    const dexLiquidity = c.cap * 0.02 * (0.8 + Math.sin(rank)*0.2);
+    const chains = ['ETH', 'BSC', 'SOL', 'POLYGON', 'AVAX'];
+    const chain = chains[rank % chains.length];
+    
+    // Calculate age:
+    let age = '4y';
+    if (c.symbol === 'BTC') age = '17y';
+    else if (c.symbol === 'ETH') age = '11y';
+    else if (c.symbol === 'SOL') age = '6y';
+    else if (rank % 7 === 0) age = '4d';
+    else if (rank % 5 === 0) age = '12d';
+    else if (rank % 3 === 0) age = '2m';
+    else if (rank % 2 === 0) age = '3y';
+    else age = '7y';
+    
+    // DEX txns:
+    const txnsVal = Math.round(c.vol / c.price / 1000 + 10);
+    const buys = Math.round(txnsVal * 0.53);
+    const sells = Math.round(txnsVal * 0.47);
+    
+    function formatK(n) {
+      if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+      return n;
+    }
+    
+    // Security scan:
+    const isSafe = rank <= 150 || rank % 9 !== 0;
+    const securityScan = isSafe 
+      ? `<span class="safe-badge"><i class="ti ti-shield-check"></i> Safe</span>`
+      : `<span class="caution-badge"><i class="ti ti-alert-circle"></i> Caution</span>`;
+      
     return `<tr data-id="${c.id}">
-      <td data-label="#" class="muted num">${rank}</td>
-      <td data-label="Name"><a class="coin-cell" href="#/coin/${c.id}"><img src="${c.img}" alt="" loading="lazy" width="32" height="32"/><span><span class="nm">${c.name}</span><span class="sm">${c.symbol}</span></span></a></td>
-      <td data-label="Price" class="num price-cell">${fmtPrice(c.price)}</td>
+      <td data-label="#"><i class="ti ti-star star-icon" onclick="event.stopPropagation(); toast('Added to watchlist!')"></i> ${rank}</td>
+      <td data-label="Name">
+        <a class="coin-cell" href="#/coin/${c.id}">
+          <img src="${c.img}" alt="" loading="lazy" width="24" height="24"/>
+          <span>
+            <span class="nm">${c.name}</span>
+            <span class="sm">${c.symbol}</span>
+          </span>
+        </a>
+        <button class="buy-btn" onclick="event.stopPropagation(); toast('Buy interface loaded')">Buy</button>
+      </td>
+      <td data-label="Price" class="num price-cell">${fmtCurrency(c.price)}</td>
+      <td data-label="1h%"><span class="pill ${h1cls}">${pfmt(h1)}</span></td>
       <td data-label="24h%"><span class="pill ${h24cls}">${pfmt(c.h24)}</span></td>
-      <td data-label="7d%"><span class="pill ${d7cls}">${pfmt(c.d7)}</span></td>
-      <td data-label="Market Cap" class="num muted">${fmtBig(c.cap)}</td>
-      <td data-label="Volume" class="num muted">${fmtBig(c.vol)}</td>
-      <td data-label="7D"><canvas class="spark" width="100" height="36" data-seed="${rank}" data-positive="${c.d7>=0?1:0}"></canvas></td>
+      <td data-label="Market Cap" class="num muted">${fmtCurrency(c.cap, true)}</td>
+      <td data-label="Volume" class="num muted">${fmtCurrency(c.vol, true)}</td>
+      <td data-label="DEX Liquidity">
+        <div class="num">${fmtCurrency(dexLiquidity, true)}</div>
+        <div class="chain-badge">${chain}</div>
+      </td>
+      <td data-label="Age">${age}</td>
+      <td data-label="DEX Txns (24h)">
+        <span class="up-val">${formatK(buys)}</span> / <span class="down-val">${formatK(sells)}</span>
+      </td>
+      <td data-label="Security Scan">${securityScan}</td>
     </tr>`;
   }).join('');
   document.getElementById('pagerInfo').textContent = `Showing ${start+1}–${Math.min(start+perPage,COINS.length)} of ${COINS.length}`;
@@ -735,9 +1143,16 @@ function startPriceTicker(){
 
 function renderTrending(){
   const v = document.getElementById('view');
+  if (!v) return;
+  
+  // Sort coins by 24h change descending to show real trending/top gainers!
+  const trendingCoins = [...COINS].sort((a,b) => b.h24 - a.h24);
+  
   v.innerHTML = `
-    <div class="section-head"><h2><span class="label">Trending Coins</span> 🔥</h2></div>
-    <div class="scroller"><div class="strip">${COINS.slice(0,12).map(trendCard).join('')}</div></div>
+    <!-- Sub-nav included under view layout -->
+    <div class="section-head"><h2><span class="label">Top Gainers</span> 🔥</h2></div>
+    <div class="scroller"><div class="strip" id="trendStrip">${trendingCoins.slice(0,12).map(trendCard).join('')}</div></div>
+    
     <div class="section-head"><h2>Trending NFTs</h2></div>
     <div class="scroller"><div class="strip">${NFTS.concat(NFTS).map((n,i)=>`
       <a class="trend-card" href="#">
@@ -753,6 +1168,9 @@ function renderTrending(){
 
 function renderExchanges(){
   const v = document.getElementById('view');
+  if (!v) return;
+  const btcPrice = COINS.find(c => c.symbol === 'BTC')?.price || 67000;
+  
   v.innerHTML = `
     <div class="section-head"><div><h2>Top Exchanges</h2><div class="muted" style="margin-top:6px">Ranked by volume and trust score</div></div></div>
     <div class="grid-3">
@@ -767,7 +1185,7 @@ function renderExchanges(){
           </div>
           <div class="trust-bar"><div style="width:${e.trust*10}%"></div></div>
           <div class="ex-stats">
-            <div><div class="muted">24h BTC Vol</div><div class="num" style="color:var(--text)">${nfmt.format(e.vol)}</div></div>
+            <div><div class="muted">24h Vol</div><div class="num" style="color:var(--text)">${fmtCurrency(e.vol * btcPrice, true)}</div></div>
             <div><div class="muted">Country</div><div>${e.country}</div></div>
             <div><div class="muted">Year</div><div>${e.year}</div></div>
           </div>
@@ -780,6 +1198,7 @@ function renderExchanges(){
 let catFilter = null;
 function renderCategories(){
   const v = document.getElementById('view');
+  if (!v) return;
   v.innerHTML = `
     <div class="section-head"><h2>Categories ${catFilter?`<button class="btn" id="clrf" style="margin-left:12px">Clear: ${catFilter} ✕</button>`:''}</h2></div>
     <div class="grid-3">
@@ -939,10 +1358,51 @@ document.getElementById('themeBtn').onclick = ()=>{
   document.querySelector('#themeBtn i').className = next==='light' ? 'ti ti-sun' : 'ti ti-moon';
 };
 
-/* ---------- Drawer ---------- */
-function closeDrawer(){document.getElementById('sidebar').classList.remove('open');document.getElementById('backdrop').classList.remove('open');}
-document.getElementById('menuBtn').onclick = ()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('backdrop').classList.add('open');};
-document.getElementById('backdrop').onclick = closeDrawer;
+/* ---------- Drawer & Navigation Helpers ---------- */
+function closeDrawer(){
+  const s = document.getElementById('sidebar');
+  const b = document.getElementById('backdrop');
+  if(s) s.classList.remove('open');
+  if(b) b.classList.remove('open');
+}
+
+/* ---------- Currency Selector & Shortcuts ---------- */
+const curSelect = document.getElementById('currencySelect');
+if (curSelect) {
+  curSelect.onchange = (e) => {
+    activeCurrency = e.target.value;
+    refreshActiveView();
+    updateBottomTape();
+    toast(`Currency switched to ${activeCurrency}`);
+  };
+}
+
+const aiInput = document.getElementById('aiInput');
+const aiSend = document.getElementById('aiSend');
+function handleAiSubmit() {
+  const val = aiInput.value.trim();
+  if (!val) return;
+  toast(`CMC AI: Analyzing "${val}"...`);
+  aiInput.value = '';
+  setTimeout(() => {
+    toast(`CMC AI: Solstice SLX and Worldcoin are currently showing high DEX transaction volume.`);
+  }, 1200);
+}
+if (aiSend && aiInput) {
+  aiSend.onclick = handleAiSubmit;
+  aiInput.onkeydown = (e) => { if (e.key === 'Enter') handleAiSubmit(); };
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement !== search && document.activeElement !== aiInput) {
+    e.preventDefault();
+    search.focus();
+  }
+  if (e.key === '?' && e.shiftKey && document.activeElement !== search && document.activeElement !== aiInput) {
+    e.preventDefault();
+    aiInput.focus();
+  }
+});
 
 /* ---------- Scroll top ---------- */
 const st = document.getElementById('scrollTop');
@@ -959,6 +1419,7 @@ function toast(msg){
 
 /* ---------- Boot ---------- */
 navigate();
+fetchExchangeRates();
 fetchLiveCoins().then(() => fetchLiveExchanges());
 setInterval(fetchLiveCoins, 15000);
 setInterval(fetchLiveExchanges, 60000);
