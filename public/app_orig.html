@@ -1,9 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>CryptoSphere — Markets</title>
+<title>CryptoSphere ΓÇö Markets</title>
 <meta name="description" content="A modern cryptocurrency marketplace: live markets, trending coins, exchanges, categories and BTC holders." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -232,572 +232,104 @@ h2{font-size:20px}
 }
 
 /* Dropdown */
-.search-dd {
-  position: absolute;
-  top: 44px;
-  left: 0;
-  right: 0;
-  background: var(--bg-2);
-  border: 1px solid var(--border-2);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 8px;
-  display: none;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity .15s ease, transform .15s ease;
-  max-height: 60vh;
-  overflow: auto;
-  z-index: 100;
-}
-.search-dd.open {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-.dd-section { padding: 8px 10px 4px; color: var(--text-3); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
-.dd-row { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 8px; border-left: 2px solid transparent; cursor: pointer; }
-.dd-row:hover, .dd-row.active { background: rgba(59,130,246,0.08); border-left-color: var(--blue); }
-.dd-row img { width: 32px; height: 32px; border-radius: 50%; }
-.dd-name { font-weight: 500; }
-.dd-sym { color: var(--text-2); font-size: 12px; margin-left: 6px; }
-.badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 500; }
-.badge-type { margin-left: auto; background: var(--bg-3); color: var(--text-2); border: 1px solid var(--border); }
+.table tbody tr:hover{background:rgba(255,255,255,0.03)}
+[data-theme="light"] .table tbody tr:hover{background:rgba(0,0,0,0.03)}
+.coin-cell{display:flex;align-items:center;gap:12px}
+.coin-cell img{width:32px;height:32px;border-radius:50%}
+.coin-cell .nm{font-weight:500}
+.coin-cell .sm{color:var(--text-2);font-size:12px;margin-left:6px}
+.num{font-family:var(--mono)}
+.pill{display:inline-block;padding:3px 8px;border-radius:9999px;font-size:12px;font-weight:500}
+.pill.up{background:rgba(34,197,94,0.15);color:var(--green)}
+.pill.down{background:rgba(239,68,68,0.15);color:var(--red)}
 
-/* Content Layout */
-.content {
-  padding: 24px 32px 80px;
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  animation: pageIn .2s ease;
-}
-@keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.spark{display:block}
 
-/* Sub-nav */
-.sub-nav {
-  display: flex;
-  gap: 24px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.sub-nav::-webkit-scrollbar { display: none; }
-.sub-nav a {
-  color: var(--text-2);
-  font-size: 14px;
-  font-weight: 600;
-  padding: 0 2px 12px;
-  border-bottom: 2px solid transparent;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.sub-nav a:hover, .sub-nav a.active {
-  color: var(--text);
-  border-bottom-color: var(--blue);
-}
+.flash{animation:flash .6s ease}
+@keyframes flash{0%{background:rgba(245,158,11,0.3)}100%{background:transparent}}
 
-/* Stats Overview Cards Grid */
-.stats-overview {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+/* pagination */
+.pager{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+.btn{
+  border:1px solid var(--border);background:transparent;color:var(--text);
+  padding:8px 12px;border-radius:8px;font-size:13px;transition:.15s;display:inline-flex;align-items:center;gap:6px;
 }
-.stat-card {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 124px;
-  position: relative;
-  overflow: hidden;
+.btn:hover{background:var(--bg-3);border-color:var(--border-2)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn-blue{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-blue:hover{background:#2563eb}
+.select{appearance:none;background:transparent;border:1px solid var(--border);color:var(--text);padding:7px 28px 7px 10px;border-radius:8px;font-size:13px}
+
+/* Toast */
+.toasts{position:fixed;top:80px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:100}
+.toast{background:var(--bg-2);border:1px solid var(--border-2);padding:12px 14px;border-radius:10px;min-width:240px;box-shadow:var(--shadow);animation:slideIn .25s ease}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* Scroll top */
+.scroll-top{position:fixed;right:24px;bottom:24px;width:44px;height:44px;border-radius:50%;background:var(--bg-2);border:1px solid var(--border-2);display:none;align-items:center;justify-content:center;box-shadow:var(--shadow);z-index:50}
+.scroll-top.show{display:inline-flex}
+
+/* Skeleton */
+.skel{position:relative;overflow:hidden;background:var(--bg-3);border-radius:6px}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent, rgba(255,255,255,0.06), transparent);animation:shimmer 1.5s infinite}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+
+/* Mobile */
+.menu-btn{display:none}
+.backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:25}
+.backdrop.open{display:block}
+
+@media (max-width:1280px){.content{padding:24px}}
+@media (max-width:1024px){
+  .app{grid-template-columns:64px 1fr}
+  .sidebar{padding:20px 8px}
+  .brand-name, .nav a span{display:none}
+  .nav a{justify-content:center;padding:10px}
+  .stats{grid-template-columns:repeat(2,1fr)}
 }
-.stat-card .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-2);
-  margin-bottom: 4px;
-  width: 100%;
-}
-.stat-card .card-header i {
-  font-size: 12px;
-  color: var(--text-3);
-}
-.stat-card .stat-value {
-  font-family: var(--mono);
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text);
-}
-.stat-card .stat-change {
-  font-size: 11px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-}
-.stat-card .stat-change.up { color: var(--green); }
-.stat-card .stat-change.down { color: var(--red); }
-.stat-card .mini-chart {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  pointer-events: none;
+@media (max-width:768px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:240px;transform:translateX(-100%);transition:transform .25s ease;padding:20px 12px}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar .brand-name, .sidebar .nav a span{display:inline}
+  .sidebar .nav a{justify-content:flex-start;padding:9px 12px}
+  .menu-btn{display:inline-flex}
+  .header{grid-template-columns:auto 1fr auto;padding:12px 16px}
+  .search-wrap{width:auto}
+  .content{padding:16px 16px 80px}
+  .table thead{display:none}
+  .table, .table tbody, .table tr, .table td{display:block;width:100%}
+  .table tbody tr{padding:14px 16px;border-bottom:1px solid var(--border)}
+  .table tbody td{height:auto;padding:4px 0;border:0;display:flex;justify-content:space-between;gap:12px}
+  .table tbody td::before{content:attr(data-label);color:var(--text-2);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
 }
 
-/* Gauge Card */
-.gauge-card {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 12px 8px;
-}
-.gauge-card .card-header {
-  justify-content: center;
-  margin-bottom: 2px;
-}
-.gauge-container {
-  margin-top: -6px;
-  width: 90px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-}
+/* Coin detail */
+.coin-detail{display:grid;grid-template-columns:2fr 3fr;gap:24px}
+@media (max-width:1024px){.coin-detail{grid-template-columns:1fr}}
+.coin-header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.coin-header img{width:64px;height:64px;border-radius:50%}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.price-grid .card{padding:14px 16px}
+.supply-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:8px}
+.supply-bar > div{height:100%;background:var(--blue)}
+.link-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tabs{display:flex;gap:6px;margin-top:12px}
+.tabs button{padding:7px 14px;border-radius:9999px;background:transparent;color:var(--text-2);border:1px solid transparent}
+.tabs button.active{background:var(--blue);color:#fff}
+.chart-frame{height:420px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
 
-/* Slider Card */
-.slider-card {
-  padding: 14px 16px;
-}
-.slider-widget {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  width: 100%;
-}
-.slider-val-row {
-  font-size: 18px;
-  font-weight: 600;
-  font-family: var(--mono);
-}
-.slider-val-row .dim {
-  font-size: 12px;
-  color: var(--text-3);
-}
-.slider-track-wrap {
-  height: 6px;
-  position: relative;
-  margin: 6px 0;
-}
-.slider-track {
-  height: 100%;
-  border-radius: 9999px;
-  position: relative;
-}
-.slider-thumb {
-  width: 10px;
-  height: 10px;
-  background: white;
-  border: 2.5px solid var(--bg-2);
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-}
-.slider-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  color: var(--text-3);
-  font-weight: 500;
-}
-
-/* News Card */
-.news-card {
-  padding: 12px 14px;
-  justify-content: flex-start;
-}
-.news-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-  width: 100%;
-}
-.news-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(29, 161, 242, 0.15);
-  color: #1da1f2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
-.news-meta {
-  font-size: 11px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.news-author {
-  font-weight: 600;
-  color: var(--text);
-}
-.news-time {
-  color: var(--text-3);
-}
-.news-content {
-  font-size: 11px;
-  line-height: 1.4;
-  color: var(--text-2);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-/* Pills Row */
-.pills-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-}
-.pills-row::-webkit-scrollbar { display: none; }
-.pill-btn {
-  padding: 6px 12px;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 500;
-  border: 1px solid var(--border);
-  transition: all 0.15s;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.pill-btn:hover {
-  background: var(--bg-3);
-  border-color: var(--border-2);
-}
-.pill-purple { border-color: rgba(139, 92, 246, 0.4); color: #c084fc; background: rgba(139, 92, 246, 0.05); }
-.pill-blue { border-color: rgba(59, 130, 246, 0.4); color: #60a5fa; background: rgba(59, 130, 246, 0.05); }
-.pill-purple-dark { border-color: rgba(139, 92, 246, 0.6); color: #a855f7; background: rgba(139, 92, 246, 0.08); }
-.pill-blue-dark { border-color: rgba(37, 99, 235, 0.6); color: #3b82f6; background: rgba(37, 99, 235, 0.08); }
-.pill-pink-dark { border-color: rgba(236, 72, 153, 0.6); color: #ec4899; background: rgba(236, 72, 153, 0.08); }
-
-/* Filters Row */
-.filters-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.filters-left, .filters-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.time-filters {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.time-filters button {
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-2);
-  border: none;
-  background: var(--bg-2);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.time-filters button:not(:last-child) {
-  border-right: 1px solid var(--border);
-}
-.time-filters button.active, .time-filters button:hover {
-  background: var(--bg-3);
-  color: var(--text);
-}
-.filter-btn {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-2);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.filter-btn.active, .filter-btn:hover {
-  background: var(--bg-3);
-  color: var(--text);
-  border-color: var(--border-2);
-}
-.filter-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: var(--text-2);
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 6px;
-  border-radius: 4px;
-  transition: background 0.15s;
-}
-.filter-option:hover {
-  background: var(--bg-3);
-  color: var(--text);
-}
-
-/* Star and Buy components in table */
-.star-icon {
-  color: var(--text-3);
-  cursor: pointer;
-  margin-right: 6px;
-  transition: color 0.15s;
-  font-size: 14px;
-}
-.star-icon:hover {
-  color: #F59E0B;
-}
-.buy-btn {
-  font-size: 11px;
-  font-weight: 600;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3B82F6;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  padding: 2px 8px;
-  border-radius: 6px;
-  margin-left: 8px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.buy-btn:hover {
-  background: #3B82F6;
-  color: white;
-}
-.chain-badge {
-  font-size: 9px;
-  background: var(--bg-3);
-  border: 1px solid var(--border);
-  color: var(--text-2);
-  padding: 1px 4px;
-  border-radius: 4px;
-  margin-top: 2px;
-  display: inline-block;
-}
-.safe-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--green);
-  font-size: 12px;
-  font-weight: 500;
-}
-.safe-badge i { font-size: 14px; }
-.caution-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--amber);
-  font-size: 12px;
-  font-weight: 500;
-}
-.caution-badge i { font-size: 14px; }
-
-/* AI Assistant floating bar */
-.ai-chat-bar {
-  position: fixed;
-  bottom: 54px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 440px;
-  max-width: 90%;
-  z-index: 80;
-  animation: floatIn 0.3s ease;
-}
-@keyframes floatIn { from { transform: translate(-50%, 10px); opacity:0; } to { transform: translate(-50%, 0); opacity: 1; } }
-.ai-chat-inner {
-  display: flex;
-  align-items: center;
-  background: rgba(17, 17, 19, 0.85);
-  border: 1px solid var(--border-2);
-  backdrop-filter: blur(16px);
-  border-radius: 9999px;
-  padding: 6px 14px;
-  box-shadow: var(--shadow);
-}
-.ai-sparkle {
-  color: #8B5CF6;
-  margin-right: 8px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-.ai-chat-inner input {
-  flex: 1;
-  background: none;
-  border: none;
-  color: var(--text);
-  font-size: 13px;
-  outline: none;
-}
-.ai-chat-inner input::placeholder {
-  color: var(--text-3);
-}
-.ai-shortcut {
-  font-size: 10px;
-  color: var(--text-3);
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: var(--mono);
-  margin-right: 8px;
-}
-.ai-send {
-  background: #8B5CF6;
-  color: white;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  font-size: 12px;
-  transition: background 0.15s;
-}
-.ai-send:hover { background: #7c3aed; }
-
-/* Fixed Bottom Footer Stats Tape */
-.footer-stats-tape {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 38px;
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 24px;
-  font-size: 11px;
-  color: var(--text-2);
-  z-index: 100;
-}
-.tape-content {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.tape-content::-webkit-scrollbar { display: none; }
-.tape-content span {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  white-space: nowrap;
-}
-.tape-content .active-val { color: var(--text); font-weight: 500; }
-.tape-content .up-val { color: var(--green); font-weight: 500; }
-.tape-content .down-val { color: var(--red); font-weight: 500; }
-.tape-links {
-  display: flex;
-  gap: 12px;
-}
-.tape-links a {
-  color: var(--blue);
-  font-weight: 500;
-}
-.tape-links a:hover { text-decoration: underline; }
-
-/* Table and Base Layouts */
-.table-wrap { margin-top: 8px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-.table { width: 100%; border-collapse: collapse; }
-.table thead th {
-  position: sticky; top: 60px; z-index: 5; background: color-mix(in oklab,var(--bg-2) 80%,transparent);
-  backdrop-filter: blur(8px); text-align: left; padding: 14px 16px; font-size: 12px; color: var(--text-2); font-weight: 500;
-  text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border);
-}
-.table tbody td { padding: 0 16px; height: 56px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-.table tbody tr { transition: background .15s; }
-.table tbody tr:hover { background: rgba(255,255,255,0.03); }
-[data-theme="light"] .table tbody tr:hover { background: rgba(0,0,0,0.03); }
-.coin-cell { display: flex; align-items: center; gap: 12px; }
-.coin-cell img { width: 24px; height: 24px; border-radius: 50%; }
-.coin-cell .nm { font-weight: 500; }
-.coin-cell .sm { color: var(--text-2); font-size: 12px; margin-left: 6px; }
-.num { font-family: var(--mono); }
-.pill { display: inline-block; padding: 3px 8px; border-radius: 9999px; font-size: 12px; font-weight: 500; }
-.pill.up { background: rgba(34,197,94,0.15); color: var(--green); }
-.pill.down { background: rgba(239,68,68,0.15); color: var(--red); }
-.spark { display: block; }
-.flash { animation: flash .6s ease; }
-@keyframes flash { 0% { background: rgba(245,158,11,0.3); } 100% { background: transparent; } }
-
-.pager { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; }
-.btn {
-  border: 1px solid var(--border); background: transparent; color: var(--text);
-  padding: 8px 12px; border-radius: 8px; font-size: 13px; transition: .15s; display: inline-flex; align-items: center; gap: 6px;
-}
-.btn:hover { background: var(--bg-3); border-color: var(--border-2); }
-.btn[disabled] { opacity: .4; cursor: not-allowed; }
-.select { appearance: none; background: transparent; border: 1px solid var(--border); color: var(--text); padding: 7px 28px 7px 10px; border-radius: 8px; font-size: 13px; }
-.toasts { position: fixed; top: 80px; right: 24px; display: flex; flex-direction: column; gap: 8px; z-index: 100; }
-.toast { background: var(--bg-2); border: 1px solid var(--border-2); padding: 12px 14px; border-radius: 10px; min-width: 240px; box-shadow: var(--shadow); animation: slideIn .25s ease; }
-@keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-.scroll-top { position: fixed; right: 24px; bottom: 24px; width: 44px; height: 44px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--border-2); display: none; align-items: center; justify-content: center; box-shadow: var(--shadow); z-index: 50; }
-.scroll-top.show { display: inline-flex; }
-.skel { position: relative; overflow: hidden; background: var(--bg-3); border-radius: 6px; }
-.skel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); animation: shimmer 1.5s infinite; }
-@keyframes shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
-
-.coin-detail { display: grid; grid-template-columns: 2fr 3fr; gap: 24px; }
-@media (max-width: 1024px) { .coin-detail { grid-template-columns: 1fr; } }
-.coin-header { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
-.coin-header img { width: 64px; height: 64px; border-radius: 50%; }
-.price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
-.price-grid .card { padding: 14px 16px; }
-.supply-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 8px; }
-.supply-bar > div { height: 100%; background: var(--blue); }
-.link-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.tabs { display: flex; gap: 6px; margin-top: 12px; }
-.tabs button { padding: 7px 14px; border-radius: 9999px; background: transparent; color: var(--text-2); border: 1px solid transparent; }
-.tabs button.active { background: var(--blue); color: #fff; }
-.chart-frame { height: 420px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-@media (max-width: 1024px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { .grid-3 { grid-template-columns: 1fr; } }
-.ex-card { padding: 20px; border-radius: 16px; }
-.ex-top { display: flex; align-items: center; gap: 12px; }
-.ex-top img { width: 40px; height: 40px; border-radius: 8px; background: var(--bg-3); }
-.trust-bar { height: 4px; background: var(--border); border-radius: 2px; margin: 14px 0; overflow: hidden; }
-.trust-bar > div { height: 100%; background: var(--blue); }
-.ex-stats { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-2); }
-.cat-card.active { border-color: var(--blue); background: color-mix(in oklab, var(--blue) 5%, var(--bg-2)); }
+/* Exchanges / Categories grid */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:1024px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid-3{grid-template-columns:1fr}}
+.ex-card{padding:20px;border-radius:16px}
+.ex-top{display:flex;align-items:center;gap:12px}
+.ex-top img{width:40px;height:40px;border-radius:8px;background:var(--bg-3)}
+.trust-bar{height:4px;background:var(--border);border-radius:2px;margin:14px 0;overflow:hidden}
+.trust-bar > div{height:100%;background:var(--blue)}
+.ex-stats{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2)}
+.cat-card.active{border-color:var(--blue);background:color-mix(in oklab, var(--blue) 5%, var(--bg-2))}
 </style>
 </head>
 <body>
@@ -835,11 +367,11 @@ h2{font-size:20px}
       <!-- Live Currency Switcher -->
       <div class="currency-selector-wrap">
         <select class="select" id="currencySelect" aria-label="Select currency">
-          <option value="INR" selected>INR (₹)</option>
+          <option value="INR" selected>INR (Γé╣)</option>
           <option value="USD">USD ($)</option>
-          <option value="EUR">EUR (€)</option>
-          <option value="GBP">GBP (£)</option>
-          <option value="JPY">JPY (¥)</option>
+          <option value="EUR">EUR (Γé¼)</option>
+          <option value="GBP">GBP (┬ú)</option>
+          <option value="JPY">JPY (┬Ñ)</option>
           <option value="CAD">CAD (CA$)</option>
           <option value="AUD">AUD (A$)</option>
         </select>
@@ -893,13 +425,13 @@ h2{font-size:20px}
   <div class="tape-content" id="footerTapeContent">
     <span>Cryptos: <span class="active-val">51.28M</span></span>
     <span>Exchanges: <span class="active-val">947</span></span>
-    <span>Market Cap: <span class="down-val" id="tapeMarketCap">₹245.73T ▼ 0.73%</span></span>
-    <span>24h Vol: <span class="up-val" id="tapeVol">₹7.44T ▲ 23.30%</span></span>
+    <span>Market Cap: <span class="down-val" id="tapeMarketCap">Γé╣245.73T Γû╝ 0.73%</span></span>
+    <span>24h Vol: <span class="up-val" id="tapeVol">Γé╣7.44T Γû▓ 23.30%</span></span>
     <span>Dominance: <span class="active-val">BTC: 59.8% ETH: 9.9%</span></span>
     <span>ETH Gas: <span class="active-val">0.74 Gwei</span></span>
     <span>Fear & Greed: <span class="active-val" style="color:#F59E0B">41/100</span></span>
     <span>Boost #4</span>
-    <span style="color:#F59E0B">BAS ₹30</span>
+    <span style="color:#F59E0B">BAS Γé╣30</span>
   </div>
   <div class="tape-links">
     <a href="#" target="_blank">Get listed</a>
@@ -1193,10 +725,10 @@ let currencyRates = {
 let activeCurrency = 'INR';
 const currencySymbols = {
   USD: '$',
-  INR: '₹',
-  EUR: '€',
-  GBP: '£',
-  JPY: '¥',
+  INR: 'Γé╣',
+  EUR: 'Γé¼',
+  GBP: '┬ú',
+  JPY: '┬Ñ',
   CAD: 'CA$',
   AUD: 'A$'
 };
@@ -1261,8 +793,8 @@ function updateBottomTape() {
   tape.innerHTML = `
     <span>Cryptos: <span class="active-val">${nfmt.format(51280)}</span></span>
     <span>Exchanges: <span class="active-val">947</span></span>
-    <span>Market Cap: <span class="down-val">${fmtCurrency(totalCap, true)} ▼ 0.73%</span></span>
-    <span>24h Vol: <span class="up-val">${fmtCurrency(totalVol, true)} ▲ 23.30%</span></span>
+    <span>Market Cap: <span class="down-val">${fmtCurrency(totalCap, true)} Γû╝ 0.73%</span></span>
+    <span>24h Vol: <span class="up-val">${fmtCurrency(totalVol, true)} Γû▓ 23.30%</span></span>
     <span>Dominance: <span class="active-val">BTC: ${btcDom.toFixed(1)}% ETH: ${ethDom.toFixed(1)}%</span></span>
     <span>ETH Gas: <span class="active-val">0.74 Gwei</span></span>
     <span>Fear & Greed: <span class="active-val" style="color:#F59E0B">41/100</span></span>
@@ -1419,7 +951,7 @@ function renderMarkets(){
           <div class="news-avatar"><i class="ti ti-brand-twitter"></i></div>
           <div class="news-meta">
             <span class="news-author">WuBlockchain <i class="ti ti-circle-check-filled" style="color:var(--blue)"></i></span>
-            <span class="news-time">· 2h</span>
+            <span class="news-time">┬╖ 2h</span>
           </div>
         </div>
         <div class="news-content">
@@ -1569,7 +1101,7 @@ function renderCoinPage(){
       <td data-label="Security Scan">${securityScan}</td>
     </tr>`;
   }).join('');
-  document.getElementById('pagerInfo').textContent = `Showing ${start+1}–${Math.min(start+perPage,COINS.length)} of ${COINS.length}`;
+  document.getElementById('pagerInfo').textContent = `Showing ${start+1}ΓÇô${Math.min(start+perPage,COINS.length)} of ${COINS.length}`;
   document.getElementById('prev').disabled = page===1;
   document.getElementById('next').disabled = page*perPage>=COINS.length;
   requestAnimationFrame(()=>document.querySelectorAll('#coinsBody canvas.spark').forEach(drawSpark));
@@ -1618,7 +1150,7 @@ function renderTrending(){
   
   v.innerHTML = `
     <!-- Sub-nav included under view layout -->
-    <div class="section-head"><h2><span class="label">Top Gainers</span> 🔥</h2></div>
+    <div class="section-head"><h2><span class="label">Top Gainers</span> ≡ƒöÑ</h2></div>
     <div class="scroller"><div class="strip" id="trendStrip">${trendingCoins.slice(0,12).map(trendCard).join('')}</div></div>
     
     <div class="section-head"><h2>Trending NFTs</h2></div>
@@ -1668,7 +1200,7 @@ function renderCategories(){
   const v = document.getElementById('view');
   if (!v) return;
   v.innerHTML = `
-    <div class="section-head"><h2>Categories ${catFilter?`<button class="btn" id="clrf" style="margin-left:12px">Clear: ${catFilter} ✕</button>`:''}</h2></div>
+    <div class="section-head"><h2>Categories ${catFilter?`<button class="btn" id="clrf" style="margin-left:12px">Clear: ${catFilter} Γ£ò</button>`:''}</h2></div>
     <div class="grid-3">
       ${CATEGORIES.map(c=>`
         <div class="card cat-card ${catFilter===c.name?'active':''}" data-cat="${c.name}" style="cursor:pointer">
@@ -1705,7 +1237,7 @@ function renderHolders(){
         <tr style="background:var(--bg-3);font-weight:600">
           <td data-label="#"></td>
           <td data-label="Company">Totals</td>
-          <td data-label="Country">—</td>
+          <td data-label="Country">ΓÇö</td>
           <td data-label="BTC" class="num">${nfmt.format(total)}</td>
           <td data-label="% Supply" class="num">${HOLDERS.reduce((s,h)=>s+h.pct,0).toFixed(3)}%</td>
           <td data-label="USD" class="num">${fmtBig(totalUsd)}</td>
@@ -1758,7 +1290,7 @@ function renderCoin(params){
         </div>
         <div class="card" style="margin-top:16px">
           <h3 style="font-size:14px;margin-bottom:8px">About ${c.name}</h3>
-          <p class="muted" style="margin:0">${c.name} (${c.symbol}) is a leading digital asset. It powers a global, permissionless financial network with deep liquidity across major exchanges. This is placeholder copy — connect a data provider to render the live description.</p>
+          <p class="muted" style="margin:0">${c.name} (${c.symbol}) is a leading digital asset. It powers a global, permissionless financial network with deep liquidity across major exchanges. This is placeholder copy ΓÇö connect a data provider to render the live description.</p>
         </div>
         <div class="price-grid" style="margin-top:16px">
           ${miniStat('Twitter Followers', nfmt.format(1_240_000))}
